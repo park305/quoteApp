@@ -13,11 +13,11 @@ Hence the function findQuoteend() existence
 
 print "Program Starting...<br />";
 $ouFilename = "QuotesFromForbes.txt";
-$outfile = fopen($ouFilename, "w");
+$outfile = fopen($ouFilename, "wb");
 
 
 $filename = "rawfile-QuotesFromForbes.txt";
-$fp = fopen($filename, "r");
+$fp = fopen($filename, "rb");
     while (($buffer = fgets($fp, 4096)) !== false) {
     	if(strlen($buffer) > 3) {
     		$line = $buffer;
@@ -28,6 +28,9 @@ $fp = fopen($filename, "r");
             $quote = trim(substr($line, 0, $end_point));
 
             //print $quote . "by " . $author . "<br />";
+            $quote = utf8_encode($quote);
+            $author = utf8_encode($author);
+
             fwrite($outfile, $quote . ";" . $author . "\r\n");
         }
     }
