@@ -18,7 +18,6 @@
        print $pieces[0] . " - " . $pieces[1];
      else
       print "Error";
-    //print utf8_encode($pieces[0]);
 
     ?>
   </body>

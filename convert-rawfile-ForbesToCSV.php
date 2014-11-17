@@ -28,11 +28,11 @@ $fp = fopen($filename, "rb");
 
             $end_point = findQuoteEnd($line);
             $author = trim(substr($line, $end_point+1));
-            $quote = trim(substr($line, 0, $end_point));
+            $quote = trim(substr($line, 0, $end_point-4));
 
             //print $quote . "by " . $author . "<br />";
-            $quote = utf8_encode($quote);
-            $author = utf8_encode($author);
+          //  $quote = utf8_encode($quote);
+            //$author = utf8_encode($author);
 
             fwrite($outfile, $quote . ";" . $author . "\r\n");
         }
