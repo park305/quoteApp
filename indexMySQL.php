@@ -19,13 +19,18 @@
         echo $e->getMessage();
     }
 
-    $STH = $DBH->query('SELECT quote, author from quotes');
-    $STH->setFetchMode(PDO::FETCH_ASSOC);
 
-    while($row = $STH->fetch()) {
-      if(is_string($row['quote']) AND is_string($row['author']))
-         print $row['quote'] . " - " . $row['author'] . "<br />";      
-    }
+  $STH = $DBH->query('SELECT quote, author FROM quotes AS quotetbl JOIN
+    (SELECT (RAND() * (SELECT MAX(id) FROM quotes)) AS id) AS r2
+    WHERE quotetbl.id >= r2.id
+    ORDER BY quotetbl.id ASC LIMIT 1');
+    //http://jan.kneschke.de/projects/mysql/order-by-rand/
+  
+    $STH->setFetchMode(PDO::FETCH_ASSOC);
+    $row = $STH->fetch();
+    if(is_string($row['quote']) AND is_string($row['author']))
+       print $row['quote'] . " - " . $row['author'] . "<br />";      
+
 
 //$quote = iconv("UTF-8", "ISO-8859-1", $quote);
     
