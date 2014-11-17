@@ -3,14 +3,12 @@
 Insert raw CSV File Data into MySQL quotes Database
 
 */
+require('config.php');
 
 
-$dbname = "quotesapp";
-$dbuser = "root";
-$dbpass = "harvard";
 try {
   # MySQL with PDO_MYSQL
-  $DBH = new PDO("mysql:host=localhost;dbname=$dbname", $dbuser, $dbpass);
+  $DBH = new PDO("$dbtype:host=$host;dbname=$dbname", $dbuser, $dbpass);
   $DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 }
 catch(PDOException $e) {
@@ -22,7 +20,7 @@ $quotes = file("QuotesFromForbes.txt");
 $quotes2 = file("QuotesFromBrainyQuote.txt");
 $quotes = array_merge($quotes, $quotes2);
 
-$STH = $DBH->prepare("INSERT INTO quotes (quote, author) VALUES (?, ?)");
+$STH = $DBH->prepare("INSERT INTO $dbtable (quote, author) VALUES (?, ?)");
  
 
 for ($i = 0; $i < count($quotes); $i++) {
