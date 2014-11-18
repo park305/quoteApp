@@ -26,7 +26,7 @@ for($i=1;$i<12;$i++) {
 		$author = $node->item(0)->nodeValue;
 		//print $node->item(0)->nodeValue . "<br />";
 
-
+		$quote = str_replace(";", ".", $quote);
         $quote = utf8_encode(trim($quote));
         $author = utf8_encode(trim($author));
         fwrite($outfile, $quote . ";" . $author . "\r\n");
