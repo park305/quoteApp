@@ -2,11 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Inspiring Quotes v1</title>
+    <title>Inspiring Quotes : Administrator Index</title>
   </head>
   <body>
     <?php
     require('global.php');
+
+    print "<h1>Quotes : MySQL Admin</h1>";
+
+    print '
+    <ul>
+      <li> <a href="mySQL-admin-addQuote.php">Add New Quote</a></li>
+      <li> <a href="mySQL-admin-manageQuotes.php">Edit/Delete Quotes</a></li>
+      <li> <a href="mySQL-admin-uploadCSV.php">Upload CSV of Quotes</a></li>
+    </ul>
+    ';
+
+    print '<hr />';
+
+
 
   $STH = $DBH->query('SELECT quote, author FROM ' . $dbtable . ' AS quotetbl JOIN
     (SELECT (RAND() * (SELECT MAX(id) FROM ' . $dbtable . ')) AS id) AS r2
@@ -20,7 +34,6 @@
        print $row['quote'] . " - " . $row['author'] . "<br />";      
 
 
-//$quote = iconv("UTF-8", "ISO-8859-1", $quote);
     
 
     ?>
