@@ -1,0 +1,4 @@
+Had to run this SQL command to remove newline chars for authors column in DB:
+
+UPDATE quotes set author = TRIM(Replace(Replace(Replace(author,'\t',''),'\n',''),'\r',''))
+

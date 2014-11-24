@@ -8,35 +8,60 @@
     <?php
     require('global.php');
 
-
     print "<h1>Quotes : MySQL Admin : Add Quote</h1>";
+    $quote = "";
+    $author = "";
 
-    print '
-    <form action="mySQL-admin-quoteSubmit.php" method="post">
-        <label for="quote">Quote:</label> <textarea id="quote" name="quote"></textarea> <br />
-        <label for="author">Author: </label> <input type="text" id="author" name="author" /><br />
-      <input type="submit" />
-    </form>
-    ';
+    if ( isset( $_POST['submit'] ) ) {
+      $STH = $DBH->prepare("INSERT INTO $dbtable (quote, author) VALUES (?, ?)");
+      $errors = array();
 
-    print '<hr />';
-
-
-
-  $STH = $DBH->query('SELECT quote, author FROM ' . $dbtable . ' AS quotetbl JOIN
-    (SELECT (RAND() * (SELECT MAX(id) FROM ' . $dbtable . ')) AS id) AS r2
-    WHERE quotetbl.id >= r2.id
-    ORDER BY quotetbl.id ASC LIMIT 1');
-    //http://jan.kneschke.de/projects/mysql/order-by-rand/
-
-    $STH->setFetchMode(PDO::FETCH_ASSOC);
-    $row = $STH->fetch();
-    if(is_string($row['quote']) AND is_string($row['author']))
-       print $row['quote'] . " - " . $row['author'] . "<br />";      
+      if ( validateField( $_POST['quote'] ) )
+        $quote = trim( $_POST[ 'quote' ] );    
+      else 
+        array_push($errors, "Quote field is empty");
+      if ( validateField( $_POST['author'] ) )
+        $author = trim( $_POST[ 'author' ] );    
+      else 
+        array_push($errors, "Author field is empty");
+      
+        //check to see if quote already exists?
+      $VALSTH = $DBH->prepare('SELECT count(id) FROM ' . $dbtable . ' WHERE quote=?');
+      $VALSTH->execute( array( $quote ) );
+      $rows = $VALSTH->fetch(PDO::FETCH_NUM);
+      if( $rows[0] > 0 ) {
+        array_push($errors, "Quote already exists in database.");
+      }
 
 
     
+      if ( count ($errors) == 0 ) {
+        try {
+          $STH->bindParam(1, $quote);
+          $STH->bindParam(2, $author);  
+          $STH->execute();      
+          print "<h3>Quote: \"" . $quote . "\" by author " . $author . " added!</h3>";      
+          $author = $quote = "";
+        }
+        catch(PDOException $e) {
+            echo $e->getMessage();
+            exit;
+        }
+      } else {
+        foreach ( $errors as $error ) 
+          print "<h3>" . $error . "</h3>";
+      }
 
+      print "<hr />";
+    } 
+
+    printQuoteForm( "mySQL-admin-addQuote.php", $quote, $author );            
+
+    print '<hr />';
+
+  getSingleQuote($DBH, $dbtable);
+
+    
     ?>
   </body>
 </html>

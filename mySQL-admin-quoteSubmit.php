@@ -7,13 +7,44 @@
   <body>
     <?php
     require('global.php');
+    $STH = $DBH->prepare("INSERT INTO $dbtable (quote, author) VALUES (?, ?)");
+    $errors = array();
 
+    if ( isset( $_POST[ 'quote' ] ) AND is_string( $_POST['quote'] AND strlen($_POST['quote']) > 0 ) ) {
+      $quote = trim( $_POST[ 'quote' ] );    
+    } else {
+      array_push($errors, "Error with quote field");
+    }
+    if ( isset( $_POST[ 'author' ] ) AND is_string( $_POST['author'] AND strlen($_POST['author']) > 0 ) ) {
+      $author = trim( $_POST[ 'author' ] );    
+    } else {
+      array_push($errors, "Error with author field");
+    }
+
+    if ( count ($errors) == 0 ) {
+      print "Quote: " . $quote . " by " . $author . " added!<br />";      
+    } else {
+      foreach ( $errors as $error ) {
+        print $error. "<br />";
+      }
+
+    }
+    /*
+if (isset($_POST['Submit'])) {}
+
+
+    if(is_string($quote) AND is_string($author)) {
+      $STH->bindParam(1, $quote);
+      $STH->bindParam(2, $author);  
+      $STH->execute();  
+    }
+    */
     print "<h1>Quotes : MySQL Admin : Add Quote</h1>";
 
     print '
     <form action="mySQL-admin-quoteSubmit.php" method="post">
-        <label for="quote">Quote:</label> <textarea id="quote" name="quote"></textarea> <br />
-        <label for="author">Author: </label> <input type="text" id="author" name="author" /><br />
+        <label for="quote">Quote:</label> <textarea id="quote" name="quote">' . $_POST["quote"] . '</textarea> <br />
+        <label for="author">Author: </label> <input type="text" id="author" value="' . $_POST["author"] . '" name="author" /><br />
       <input type="submit" />
     </form>
     ';
@@ -21,17 +52,7 @@
     print '<hr />';
 
 
-
-  $STH = $DBH->query('SELECT quote, author FROM ' . $dbtable . ' AS quotetbl JOIN
-    (SELECT (RAND() * (SELECT MAX(id) FROM ' . $dbtable . ')) AS id) AS r2
-    WHERE quotetbl.id >= r2.id
-    ORDER BY quotetbl.id ASC LIMIT 1');
-    //http://jan.kneschke.de/projects/mysql/order-by-rand/
-
-    $STH->setFetchMode(PDO::FETCH_ASSOC);
-    $row = $STH->fetch();
-    if(is_string($row['quote']) AND is_string($row['author']))
-       print $row['quote'] . " - " . $row['author'] . "<br />";      
+  getSingleQuote( $DBH, $dbtable );
 
 
     
