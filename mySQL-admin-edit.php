@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Inspiring Quotes : Administrator Add Quote</title>
-  </head>
-  <body>
     <?php    
     require('global.php');
+    require('header.php');
+
     $errors = array();
 
     print "<h1>Quotes : MySQL Admin : Edit Quote</h1>";

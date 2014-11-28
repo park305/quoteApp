@@ -4,6 +4,7 @@ Insert raw CSV File Data into MySQL quotes Database
 
 */
 require('global.php');
+require('header.php');
 
 
 

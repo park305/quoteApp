@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Inspiring Quotes v1</title>
-  </head>
-  <body>
     <?php
     require('global.php');
+    require('header.php');
 
     $STH = $DBH->query('SELECT quote, author FROM ' . $dbtable . ' ORDER BY author');
     //http://jan.kneschke.de/projects/mysql/order-by-rand/

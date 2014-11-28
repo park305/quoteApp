@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Inspiring Quotes : Administrator Add Quote</title>
-  </head>
-  <body>
     <?php
+    $title = "Inspiring Quotes : Administrator Add Quote";
+    
     require('global.php');
+    require('header.php');
+
     $STH = $DBH->prepare("INSERT INTO $dbtable (quote, author) VALUES (?, ?)");
     $errors = array();
 

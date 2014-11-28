@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Inspiring Quotes v1: Edit Quotes</title>
-  </head>
-  <body>
     <?php
+    $title = "Inspiring Quotes v1: Edit Quotes";
+    
     require('global.php');
+    require('header.php');
+
     print "<h1>Quotes : MySQL Admin : Edit Quotes</h1>";
 
     $STH = $DBH->query('SELECT id, quote, author FROM ' . $dbtable . ' ORDER BY author');
