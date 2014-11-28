@@ -4,7 +4,12 @@
     require('header.php');
     $errors = array();
 
-    $id = $_GET['id'];
+    if(! isset($_GET['id'])) {
+      array_push($errors, "ID is not set.");
+      $id = "";
+    } else {
+      $id = $_GET['id'];
+    }
 
     if(is_numeric($id)) { 
       $VALSTH = $DBH->prepare('SELECT count(id) FROM ' . $dbtable . ' WHERE id=?');
