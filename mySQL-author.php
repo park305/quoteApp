@@ -27,10 +27,10 @@
           
 
           //print # of quotes and loop print each one
-
-        while($row = $STH->fetch()) {
-          if(is_string($row['quote']))
-             print $row['quote'] . "<br />";      
+          print $rows[0] . " quotes by " . $author . "<br />";
+          while($row = $STH->fetch()) {
+            if(is_string($row['quote']))
+              print $row['quote'] . "<br />";      
          }
 
         }

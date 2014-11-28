@@ -1,6 +1,6 @@
     <?php    
     require('global.php');
-    require('beader.php');
+    require('header.php');
 
     $errors = array();
 
@@ -20,6 +20,7 @@
         try {
           $STH->bindParam(1, $id);
           $STH->execute();      
+          print "ID " . $id . " deleted<br />";
         }
         catch(PDOException $e) {
             echo $e->getMessage();
