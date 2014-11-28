@@ -1,6 +1,6 @@
     <?php
     $title = "Inspiring Quotes : Administrator Index";
-    
+
     require('global.php');
     require('header.php');
 
@@ -32,7 +32,5 @@
 
 
     
-
+     require('footer.php');
     ?>
-  </body>
-</html>

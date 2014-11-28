@@ -1,7 +1,7 @@
     <?php
     require('global.php');
     require('header.php');
-    
+
 
   $STH = $DBH->query('SELECT quote, author FROM ' . $dbtable . ' AS quotetbl JOIN
     (SELECT (RAND() * (SELECT MAX(id) FROM ' . $dbtable . ')) AS id) AS r2
@@ -17,7 +17,5 @@
 
 //$quote = iconv("UTF-8", "ISO-8859-1", $quote);
     
-
+     require('footer.php');
     ?>
-  </body>
-</html>

@@ -1,6 +1,6 @@
     <?php
     $title = "Inspiring Quotes v1: Edit Quotes";
-    
+
     require('global.php');
     require('header.php');
 
@@ -29,5 +29,6 @@
     ?>
       </tbody>
     </table>
-  </body>
-</html>
+<?php
+require ('footer.php');
+?>

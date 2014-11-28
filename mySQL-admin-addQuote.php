@@ -58,7 +58,5 @@
 
   getSingleQuote($DBH, $dbtable);
 
-    
+  require('footer.php');    
     ?>
-  </body>
-</html>

@@ -1,6 +1,6 @@
     <?php
     $title = "Inspiring Quotes : Administrator Add Quote";
-    
+
     require('global.php');
     require('header.php');
 
@@ -51,9 +51,8 @@ if (isset($_POST['Submit'])) {}
 
   getSingleQuote($DBH, $dbtable);
 
+  require('footer.php');
 
     
 
     ?>
-  </body>
-</html>

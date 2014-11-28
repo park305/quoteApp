@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Inspiring Quotes v1</title>
-  </head>
-  <body>
+
     <?php
     require('global.php');
+    require('header.php');
     $errors = array();
 
     $id = $_GET['id'];
@@ -48,8 +43,6 @@
       print "<h3>" . $error . "</h3>";    
 
      
-
+    require('footer.php');
 
     ?>
-  </body>
-</html>

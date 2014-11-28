@@ -34,5 +34,6 @@ for ($i = 0; $i < count($quotes); $i++) {
 
 $DBH = null;
 
+require('footer.php');
 
 ?>
