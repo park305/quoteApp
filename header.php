@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Inspiring Quotes v1</title>
+  </head>
+  <body>

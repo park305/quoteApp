@@ -14,14 +14,14 @@
     $id = $_GET['id'];
 
 
-    if( is_numeric( $id ) ) { 
+    if(is_numeric($id)) { 
       $STH = $DBH->prepare("DELETE FROM $dbtable WHERE id=?");
 
         //check to see if quote already exists?
       $VALSTH = $DBH->prepare('SELECT count(id) FROM ' . $dbtable . ' WHERE id=?');
-      $VALSTH->execute( array( $id ) );
+      $VALSTH->execute(array($id));
       $rows = $VALSTH->fetch(PDO::FETCH_NUM);
-      if( $rows[0] > 0 ) {
+      if($rows[0] > 0) {
         try {
           $STH->bindParam(1, $id);
           $STH->execute();      
@@ -31,14 +31,14 @@
             exit;
         }
       } else {
-        array_push( $errors, "Quote ID " . $id . " does not exist");        
+        array_push($errors, "Quote ID " . $id . " does not exist");        
       }      
     } else {
-      array_push( $errors, "ID is not a valid number");      
+      array_push($errors, "ID is not a valid number");      
     }
     
 
-    foreach ( $errors as $error ) 
+    foreach ($errors as $error) 
       print "<h3>" . $error . "</h3>";    
 
      

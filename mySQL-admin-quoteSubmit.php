@@ -10,21 +10,21 @@
     $STH = $DBH->prepare("INSERT INTO $dbtable (quote, author) VALUES (?, ?)");
     $errors = array();
 
-    if ( isset( $_POST[ 'quote' ] ) AND is_string( $_POST['quote'] AND strlen($_POST['quote']) > 0 ) ) {
-      $quote = trim( $_POST[ 'quote' ] );    
+    if (isset($_POST[ 'quote' ]) AND is_string($_POST['quote'] AND strlen($_POST['quote']) > 0)) {
+      $quote = trim($_POST[ 'quote' ]);    
     } else {
       array_push($errors, "Error with quote field");
     }
-    if ( isset( $_POST[ 'author' ] ) AND is_string( $_POST['author'] AND strlen($_POST['author']) > 0 ) ) {
-      $author = trim( $_POST[ 'author' ] );    
+    if (isset($_POST[ 'author' ]) AND is_string($_POST['author'] AND strlen($_POST['author']) > 0)) {
+      $author = trim($_POST[ 'author' ]);    
     } else {
       array_push($errors, "Error with author field");
     }
 
-    if ( count ($errors) == 0 ) {
+    if (count ($errors) == 0) {
       print "Quote: " . $quote . " by " . $author . " added!<br />";      
     } else {
-      foreach ( $errors as $error ) {
+      foreach ($errors as $error) {
         print $error. "<br />";
       }
 
@@ -52,7 +52,7 @@ if (isset($_POST['Submit'])) {}
     print '<hr />';
 
 
-  getSingleQuote( $DBH, $dbtable );
+  getSingleQuote($DBH, $dbtable);
 
 
     

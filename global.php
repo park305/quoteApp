@@ -5,7 +5,7 @@
     try {
       # MySQL with PDO_MYSQL
       $DBH = new PDO("$dbtype:host=$host;dbname=$dbname", $dbuser, $dbpass);
-      $DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+      $DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     catch(PDOException $e) {
         echo $e->getMessage();
@@ -15,7 +15,7 @@
 
 
 
-    function printQuoteForm( $url, $quote, $author ) {
+    function printQuoteForm($url, $quote, $author) {
       print '
       <form action="' . $url . '" method="post">
           <label for="quote">Quote:</label> <textarea id="quote" name="quote">' . $quote . '</textarea> <br />
@@ -25,8 +25,8 @@
       ';
     }
 
-    function validateField( $field ) {
-      if ( isset( $field ) AND is_string( $field ) AND strlen( $field ) > 0 ) 
+    function validateField($field) {
+      if (isset($field) AND is_string($field) AND strlen($field) > 0) 
         return true;
       else 
         return false;

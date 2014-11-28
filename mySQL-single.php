@@ -11,16 +11,16 @@
 
     $id = $_GET['id'];
 
-    if( is_numeric( $id ) ) { 
+    if(is_numeric($id)) { 
       $VALSTH = $DBH->prepare('SELECT count(id) FROM ' . $dbtable . ' WHERE id=?');
-      $VALSTH->execute( array( $id ) );
+      $VALSTH->execute( array($id) );
       $rows = $VALSTH->fetch(PDO::FETCH_NUM);
         //check to see if quote already exists?
 
-      if( $rows[0] > 0 ) {
+      if($rows[0] > 0) {
         try {
           $STH = $DBH->prepare('SELECT * FROM ' . $dbtable . ' WHERE id=?');
-          $STH->execute( array( $id ) );          
+          $STH->execute( array($id) );          
           $rows = $STH->fetch(PDO::FETCH_NUM);
 
           $STH->bindParam(1, $id);
@@ -37,14 +37,14 @@
             exit;
         }
       } else {
-        array_push( $errors, "Quote ID " . $id . " does not exist");        
+        array_push($errors, "Quote ID " . $id . " does not exist");        
       }      
     } else {
-      array_push( $errors, "ID is not a valid number");      
+      array_push($errors, "ID is not a valid number");      
     }
     
 
-    foreach ( $errors as $error ) 
+    foreach ($errors as $error) 
       print "<h3>" . $error . "</h3>";    
 
      

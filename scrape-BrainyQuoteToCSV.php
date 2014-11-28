@@ -7,8 +7,8 @@ $outfile = fopen($ouFilename, "wb");
 
 $url = "http://www.brainyquote.com/quotes/topics/topic_inspirational.html?vm=l";
 
-for($i=1;$i<12;$i++) {
-	if($i>1)
+for($i=1; $i < 12; $i++) {
+	if($i > 1)
 		$url = "http://www.brainyquote.com/quotes/topics/topic_inspirational" . $i . ".html?vm=l";
 				
 	$dom = new DOMDocument;
@@ -16,7 +16,7 @@ for($i=1;$i<12;$i++) {
 	$dom_xpath = new DOMXpath($dom);
 
 	$elements = $dom_xpath->query("//div[@class='boxyPaddingBig']");
-	if (!is_null($elements)) {
+	if ( ! is_null($elements) ) {
 	  foreach ($elements as $element) {
 
 		$node = $dom_xpath->query("span[@class='bqQuoteLink']", $element);

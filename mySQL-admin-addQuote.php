@@ -12,30 +12,30 @@
     $quote = "";
     $author = "";
 
-    if ( isset( $_POST['submit'] ) ) {
+    if (isset($_POST['submit'])) {
       $STH = $DBH->prepare("INSERT INTO $dbtable (quote, author) VALUES (?, ?)");
       $errors = array();
 
-      if ( validateField( $_POST['quote'] ) )
-        $quote = trim( $_POST[ 'quote' ] );    
+      if (validateField($_POST['quote']))
+        $quote = trim($_POST[ 'quote' ]);    
       else 
         array_push($errors, "Quote field is empty");
-      if ( validateField( $_POST['author'] ) )
-        $author = trim( $_POST[ 'author' ] );    
+      if (validateField($_POST['author']))
+        $author = trim($_POST[ 'author' ]);    
       else 
         array_push($errors, "Author field is empty");
       
         //check to see if quote already exists?
       $VALSTH = $DBH->prepare('SELECT count(id) FROM ' . $dbtable . ' WHERE quote=?');
-      $VALSTH->execute( array( $quote ) );
+      $VALSTH->execute(array($quote));
       $rows = $VALSTH->fetch(PDO::FETCH_NUM);
-      if( $rows[0] > 0 ) {
+      if($rows[0] > 0) {
         array_push($errors, "Quote already exists in database.");
       }
 
 
     
-      if ( count ($errors) == 0 ) {
+      if (count ($errors) == 0) {
         try {
           $STH->bindParam(1, $quote);
           $STH->bindParam(2, $author);  
@@ -48,14 +48,14 @@
             exit;
         }
       } else {
-        foreach ( $errors as $error ) 
+        foreach ($errors as $error) 
           print "<h3>" . $error . "</h3>";
       }
 
       print "<hr />";
     } 
 
-    printQuoteForm( "mySQL-admin-addQuote.php", $quote, $author );            
+    printQuoteForm("mySQL-admin-addQuote.php", $quote, $author);            
 
     print '<hr />';
 

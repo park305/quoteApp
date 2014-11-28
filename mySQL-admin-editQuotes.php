@@ -25,7 +25,7 @@
       <tbody>        
     <?php
     while( $row = $STH->fetch() ) {
-      if( is_string($row['quote']) AND is_string( $row['author'] ) )
+      if(is_string($row['quote']) AND is_string($row['author']))
          print "<tr><td>" . $row['id'] . "</td><td>" . $row['quote'] . " </td><td>" . $row['author'] . "</td><td><a href=\"mySQL-admin-edit.php?id=" . $row['id'] . "\">Edit</a></td><td><a href=\"mySQL-admin-delete.php?id=" . $row['id'] . "\">Delete</a></td></tr>";      
      }
 
