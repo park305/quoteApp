@@ -1,0 +1,200 @@
+<?php
+session_start();
+require_once("functions.php");
+adminpage();
+
+$pagetitle = "New Image Submitted";
+//include("adminheader.php");
+
+require("config.php");
+require_once("ajax-functions.php");
+?>
+
+<html><head><title>Utopia Systems KB: Upload Image Submitted</title>
+
+
+<script type="text/javascript">
+var CloseWindow = function() {
+  window.top.opener = null;
+  window.close();
+}
+</script>
+
+</head><body>
+<h1>Upload Image Submitted</h1>
+<p><a href="JavaScript:CloseWindow();">Close Page</a></p>
+
+<?php
+
+
+$file_count = sizeof($_FILES);
+//print "filecount: " . $file_count . "<br />";
+for($i=0;$i<$file_count;$i++) {
+$thisfilename = "file_" . $i;
+$userfile = $_FILES[$thisfilename]['tmp_name'];
+
+//print "<p>" . $userfile . "</p>";
+}
+
+
+
+$no_files = 0;
+$attachmentids = array();
+
+foreach($_FILES as $file)
+{
+switch($file['error'])
+{
+case 0:
+// file found
+if($file['name'] != NULL)  //&& okFileType($file['type']) != false
+  {
+    //print "<p>" . $file['name'] . "</p>";
+    $validated = safefileextension($file['name']);
+    print "Safe file?: " . $validated . "(1 is good, 0 is bad)<br />";
+
+    if (file_exists("uploadedimages/" . $file['name']))
+      { 
+        print "Error, this file already exists: <a href=\"/uploadedimages/" . $file['name'] . "\">http://kb.utopiasysetms.net/uploadimages/" . $file['name'] . "</a><br />";
+        $validated = 0;
+      }
+    if($validated) {
+      $fileName = $file['name'];
+      $fileSize = $file['size'];
+      $tmpName  = $file['tmp_name'];    
+      $fileType = $file['type'];
+      print "filename: " . $fileName . "<br />";
+      print "filesize: " . $fileSize . "<br />";
+      //print "tmpname: " . $tmpName  . "<br />";
+      print "filetype: " . $fileType . "<br />";
+      $file_info = pathinfo($fileName);
+     
+      if(!get_magic_quotes_gpc()){
+        $fileName = addslashes($fileName);
+     }
+           
+      $target_path = "uploadedimages/" .  basename($fileName);
+
+      if(move_uploaded_file($tmpName, $target_path)) 
+          echo "The file <a href=\"uploadedimages/" .  basename($fileName) . "\">http://kb.utopiasystems.net/uploadedimages/" . basename($fileName) . "</a> has been uploaded";
+      else
+          echo "There was an error uploading the file, please try again!";
+      
+    }
+print "<hr />";
+  }
+
+
+/*$v = processFile($file);
+
+// build string for confirmation display
+if(isset($v) && $v == true)
+{
+//showSuccess($file);
+print $
+$no_files++;
+}
+*/
+break;
+
+case (1|2):
+// upload too large
+$error = "file upload is too large";
+break;
+
+case 4:
+// no file uploaded
+//print "<p>no file</p>";
+break;
+
+case (6|7):
+// no temp folder or failed write – server config errors
+$error = "internal error – flog the webmaster";
+break;
+}
+
+//print "<p>end of file instance</p>";
+}
+
+
+
+
+
+?>
+<a href="JavaScript:CloseWindow();">Close Page</a>
+</body></html>
+<?php
+
+
+
+
+//include("adminfooter.php");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function safefileextension($filename) {
+  $acceptable_extensions[0] = "PDF";
+  $acceptable_extensions[1] = "JPG";
+  $acceptable_extensions[2] = "GIF";
+  $acceptable_extensions[3] = "DOC";
+  $acceptable_extensions[4] = "PPT";
+  $acceptable_extensions[5] = "XLS";
+  $acceptable_extensions[6] = "XSL";
+  $acceptable_extensions[7] = "TXT";
+  $acceptable_extensions[8] = "CSV";
+  $acceptable_extensions[9] = "DOCX";
+  $acceptable_extensions[10] = "WMV";
+  $acceptable_extensions[11] = "PNG";
+  $validated = 1;
+
+  if($filename){
+             
+      //make sure the file has a valid file extension
+     
+      $file_info = pathinfo($filename);
+      $acceptable_ext = 0;
+                 
+      for($x = 0; $x < count($acceptable_extensions); $x++){                
+          if(strtoupper($file_info['extension']) == $acceptable_extensions[$x]){
+              $acceptable_ext = 1;                         
+          }
+      }
+                 
+      if(!$acceptable_ext){
+          $validated = 0;
+        }  
+  } else{
+      $validated = 0;
+  }
+  return $validated;
+}
+
+
+function getfilecontent($tempname, $fileext) {
+
+    if($fileext != "GIF" && $fileext != "WMV" && $fileext != "JPG" && $fileext != "PNG") {
+      $fp = fopen($tempname, 'r');
+      $content = fread($fp, filesize($tempname));
+      $content = addslashes($content);
+      fclose($fp);
+    }
+    else {
+      $content = "";
+    }
+    return $content;
+}
+
+
+?>
