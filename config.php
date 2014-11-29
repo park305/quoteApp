@@ -5,4 +5,7 @@ $dbtype = "mysql";
     $dbpass = "harvard";
     $host = "localhost";
     $dbtable = "quotes";
+    $dbtagstable = "tags";
+    $dbcategorytable = "categories";
+    $dbrelationtable = "quotes_relationships";
 ?>
