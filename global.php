@@ -19,7 +19,7 @@
 
 
 
-    function printQuoteForm($url, $quote, $author, $DBH = null) {
+    function printQuoteForm($url, $quote, $author, $id = 0, $DBH = null, $categoryID = 1, $tags = array()) {
       //$DBH = connectDB();
       $tagRadioElements = "";
       $categoryDropDown = "";
@@ -29,7 +29,9 @@
       $STH->setFetchMode(PDO::FETCH_ASSOC);
       $categoryDropDown = '<select name="category" id="category">';      
       while( $row = $STH->fetch() ) {
-        if(is_string($row['name']) AND $row['status'] == "Active")
+        if(is_string($row['name']) AND $row['status'] == "Active" AND $row['id'] == $categoryID)
+           $categoryDropDown .= '<option value="' . $row['name'] . '" selected>' . $row['name'] . '</option>';
+         else if(is_string($row['name']) AND $row['status'] == "Active")
            $categoryDropDown .= '<option value="' . $row['name'] . '">' . $row['name'] . '</option>';
       }
       $categoryDropDown .= "</select>";
@@ -37,7 +39,9 @@
       $STH = $DBH->query("SELECT * FROM tags WHERE status='Active' ORDER BY name");
       $STH->setFetchMode(PDO::FETCH_ASSOC);
       while( $row = $STH->fetch() ) {
-        if(is_string($row['name']) AND $row['status'] == "Active")
+        if(is_string($row['name']) AND $row['status'] == "Active" AND in_array($row['id'], $tags))
+           $tagRadioElements .= '<input type="checkbox" id="tags" name="tags[]" value="' . $row['name'] . '" checked> ' . $row['name'] . '<br />';          
+        else if(is_string($row['name']) AND $row['status'] == "Active")
            $tagRadioElements .= '<input type="checkbox" id="tags" name="tags[]" value="' . $row['name'] . '"> ' . $row['name'] . '<br />';
       }
 

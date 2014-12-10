@@ -21,15 +21,33 @@
         try {
           $STH = $DBH->prepare('SELECT * FROM ' . $dbtable . ' WHERE id=?');
           $STH->execute( array($id) );          
-          $rows = $STH->fetch(PDO::FETCH_NUM);
-
-          $STH->bindParam(1, $id);
-          $STH->execute();     
-
           $STH->setFetchMode(PDO::FETCH_ASSOC);
           $row = $STH->fetch();           
           if(is_string($row['quote']) AND is_string($row['author']))
              print $row['quote'] . " - " . $row['author'] . "<br />";      
+           print "<hr />";
+
+
+           //print category
+          $STH = $DBH->prepare("SELECT * FROM " . $dbrelationtable . " WHERE quoteid=? AND relationType='category'");
+          $STH->execute( array($id) );          
+          if($row = $STH->fetch()) {
+            $categoryID = $row['relationID'];
+            $STH = $DBH->prepare("SELECT * FROM " . $dbcategorytable . " WHERE id=?");
+            $STH->execute( array($categoryID) );          
+            if($cat_row = $STH->fetch())
+              print "Category: " . $cat_row['name'] . "<br />";
+          }
+          $STH = $DBH->prepare("SELECT * FROM " . $dbrelationtable . " WHERE quoteid=? AND relationType='tag'");
+          $STH->execute( array($id) );          
+          while($row = $STH->fetch()) {
+            $tagID = $row['relationID'];
+            $STH = $DBH->prepare("SELECT * FROM " . $dbtagstable . " WHERE id=?");
+            $STH->execute( array($tagID) );          
+            if($tag_row = $STH->fetch())
+              print "Tag: " . $tag_row['name'] . "<br />";
+          }
+
 
         }
         catch(PDOException $e) {
