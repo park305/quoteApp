@@ -19,7 +19,7 @@
 
 
 
-    function printQuoteForm($url, $quote, $author, $id = 0, $DBH = null, $categoryID = 1, $tags = array()) {
+    function printQuoteForm($url, $quote, $author, $DBH = null, $categoryID = 1, $tags = array()) {
       //$DBH = connectDB();
       $tagRadioElements = "";
       $categoryDropDown = "";

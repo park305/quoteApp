@@ -5,7 +5,7 @@
     $quotes2 = file("QuotesFromBrainyQuote.txt");
     $quotes = array_merge($quotes, $quotes2);
 
-print '<div class="quote">';
+print '<div class="quote" id="quoteBody">';
     $randNum = rand(0, count($quotes)-1);
     $pieces = explode(";", $quotes[$randNum]);
     $quote = $pieces[0];

@@ -2,6 +2,7 @@
     require('global.php');
     require('header.php');
 
+print '<div class="quote" id="quoteBody">';
 
   $STH = $DBH->query('SELECT quote, author FROM ' . $dbtable . ' AS quotetbl JOIN
     (SELECT (RAND() * (SELECT MAX(id) FROM ' . $dbtable . ')) AS id) AS r2
@@ -14,6 +15,7 @@
     if(is_string($row['quote']) AND is_string($row['author']))
        print $row['quote'] . " - " . $row['author'] . "<br />";      
 
+    echo '</div><div class="nextButton" style="text-align:center;"><button id="nextBtn" class="nextBtn" type="button">NEXT</button></div>';
 
 //$quote = iconv("UTF-8", "ISO-8859-1", $quote);
     
