@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <link href='http://fonts.googleapis.com/css?family=Lilita+One' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="includes/quoteApp.css">
     <title>Inspiring Quotes v1</title>
   </head>
   <body>
-  	<h1 style="font-family: 'Lilita One', cursive;">Motivational Quotes</h1>
+  	<h1 class="siteTitle">Motivational Quotes</h1>
