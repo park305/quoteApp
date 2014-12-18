@@ -2,7 +2,7 @@
 $dbtype = "mysql";
     $dbname = "quotesapp";
     $dbuser = "root";
-    $dbpass = "harvard";
+    $dbpass = "";
     $host = "localhost";
     $dbtable = "quotes";
     $dbtagstable = "tags";

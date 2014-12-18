@@ -14,10 +14,11 @@
       $errors = array();
 
 
-      if(validateField($_POST['category']))
+      if(isset($_POST['category']) AND validateField($_POST['category']))
         $category = trim($_POST['category']);
       else
-        array_push($errors, "Missing category");
+        $category = null;
+      
       if(validateField($_POST['quote']))
         $quote = trim($_POST[ 'quote' ]);    
       else 
@@ -57,21 +58,21 @@
           //$STH->bindParam(3, "category");  
           $STH->execute();                
 
-          
-          foreach($_POST['tags'] as $tag) {
-            $STH = $DBH->prepare('SELECT * FROM tags WHERE name=?');
-            $STH->execute(array($tag));      
-            $STH->setFetchMode(PDO::FETCH_ASSOC);
-            $row = $STH->fetch();  
-            $relationID = $row['id'];
-            if($relationID > 0) {
-              $STH = $DBH->prepare("INSERT INTO $dbrelationtable (quoteID, relationID, relationType) VALUES (?, ?, 'tag')");
-              $STH->bindParam(1, $quoteID);            
-              $STH->bindParam(2, $relationID);  
-              //$STH->bindParam(3, "tag");  
-              $STH->execute();      
+          if(isset($_POST['tags']))
+            foreach($_POST['tags'] as $tag) {
+              $STH = $DBH->prepare('SELECT * FROM tags WHERE name=?');
+              $STH->execute(array($tag));      
+              $STH->setFetchMode(PDO::FETCH_ASSOC);
+              $row = $STH->fetch();  
+              $relationID = $row['id'];
+              if($relationID > 0) {
+                $STH = $DBH->prepare("INSERT INTO $dbrelationtable (quoteID, relationID, relationType) VALUES (?, ?, 'tag')");
+                $STH->bindParam(1, $quoteID);            
+                $STH->bindParam(2, $relationID);  
+                //$STH->bindParam(3, "tag");  
+                $STH->execute();      
+              }
             }
-          }
 
           print "<h3>Quote: \"" . $quote . "\" by author " . $author . " added!</h3>";      
           $author = $quote = "";
