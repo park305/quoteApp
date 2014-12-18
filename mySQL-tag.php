@@ -24,7 +24,7 @@
         $categoryID = $row['id'];
 
         if($categoryID > 0) {
-          $VALSTH = $DBH->prepare("SELECT count(id) FROM ' . $dbrelationtable . ' WHERE relationID=? AND relationType='tag'");
+          $VALSTH = $DBH->prepare("SELECT count(id) FROM " . $dbrelationtable . " WHERE relationID=? AND relationType='tag'");
           $VALSTH->execute( array($categoryID) );
           $rows = $VALSTH->fetch(PDO::FETCH_NUM);
 
@@ -35,11 +35,13 @@
               $STH = $DBH->prepare("SELECT * FROM $dbrelationtable WHERE relationID=? AND relationType='tag'");
               $STH->execute(array($categoryID));
               $STH->setFetchMode(PDO::FETCH_ASSOC);
-              while($row = $STH->fetch()) {
-                $quoteID = $row['quoteID'];
-                $STH = $DBH->prepare("SELECT * FROM $dbtable WHERE id=?");
-                $STH->execute(array($quoteID));
-                $STH->setFetchMode(PDO::FETCH_ASSOC);              
+              while($rows = $STH->fetch()) {
+                $quoteID = $rows['quoteID'];
+                $QUOSTH = $DBH->prepare("SELECT * FROM $dbtable WHERE id=?");
+                $QUOSTH->execute(array($quoteID));
+                $QUOSTH->setFetchMode(PDO::FETCH_ASSOC);              
+                $row = $QUOSTH->fetch();
+
                 print $row['quote'] . "<br />";                    
               }
 

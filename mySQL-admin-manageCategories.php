@@ -23,7 +23,7 @@
     <?php
     while( $row = $STH->fetch() ) {
       if( is_string($row['name']) AND is_string( $row['status'] ) )
-         print "<tr><td>" . $row['id'] . "</td><td>" . $row['name'] . " </td><td>" . $row['status'] . "</td><td><a href=\"mySQL-admin-edit-category.php?id=" . $row['id'] . "\">Edit</a></td><td><a href=\"mySQL-admin-delete-category.php?id=" . $row['id'] . "\">Delete</a></td></tr>";      
+         print "<tr><td>" . $row['id'] . "</td><td><a href=\"mysql-category.php?category="  . $row['name'] . "\">"  . $row['name'] . "</a></td><td>" . $row['status'] . "</td><td><a href=\"mySQL-admin-edit-category.php?id=" . $row['id'] . "\">Edit</a></td><td><a href=\"mySQL-admin-delete-category.php?id=" . $row['id'] . "\">Delete</a></td></tr>";      
      }
 
     ?>

@@ -24,7 +24,7 @@
         $categoryID = $row['id'];
 
         if($categoryID > 0) {
-          $VALSTH = $DBH->prepare("SELECT count(id) FROM ' . $dbrelationtable . ' WHERE relationID=? AND relationType='category'");
+          $VALSTH = $DBH->prepare("SELECT count(id) FROM " . $dbrelationtable . " WHERE relationID=? AND relationType='category'");
           $VALSTH->execute( array($categoryID) );
           $rows = $VALSTH->fetch(PDO::FETCH_NUM);
 
@@ -32,14 +32,16 @@
           print $category_quotes. " quotes under category " . $category . "<br />";
 
           if($category_quotes > 0) {
-              $STH = $DBH->prepare("SELECT * FROM $dbrelationtable WHERE relationID=? AND relationType='category'");
+              $STH = $DBH->prepare("SELECT * FROM ". $dbrelationtable . " WHERE relationID=? AND relationType='category'");
               $STH->execute(array($categoryID));
               $STH->setFetchMode(PDO::FETCH_ASSOC);
-              while($row = $STH->fetch()) {
-                $quoteID = $row['quoteID'];
-                $STH = $DBH->prepare("SELECT * FROM $dbtable WHERE id=?");
-                $STH->execute(array($quoteID));
-                $STH->setFetchMode(PDO::FETCH_ASSOC);              
+              while($rows = $STH->fetch()) {
+                $quoteID = $rows['quoteID'];
+                $QUO_STH = $DBH->prepare("SELECT * FROM $dbtable WHERE id=?");
+                $QUO_STH->execute(array($quoteID));
+                $QUO_STH->setFetchMode(PDO::FETCH_ASSOC);     
+                $row = $QUO_STH->fetch();
+
                 print $row['quote'] . "<br />";                    
               }
 
